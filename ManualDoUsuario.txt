@@ -7,13 +7,19 @@
 ---O usuário começa sua navegação pelo menu podendo escolher entre diversas opções 
 de transação, após a escolha ele será direcionado para a função escolhida e poderá realiza-lá.---
 
-Em nosso menu contamos com várias opções das quais o usuário pode utilizar como por exemplo:
+Em nosso menu contamos com várias funcionalidade das quais o usuário pode utilizar como por exemplo:
  1. Adicionar transação
+    No adicionar transação, o usuário pode adicionar uma nova transação financeira no sistema, informando o nome da transação, a categoria, e o valor. 
  2. Listar transações
+    No listar transações, o usuário pode visualizar todas as transações registradas no sistema.
  3. Atualizar transação
+    No atualizar transação, o  usuário pode atualizar uma transação existente no sistema, alterando o nome, a categoria e o valor.
  4. Deletar transação
+    No deletar transação, o usuário pode escolher uma transação registrada no sistema e excluí-la.
  5. Filtrar transações por categoria
+    Nesta funcionalidade, o usuário pode filtrar as transações registradas no sistema por categoria. 
  6. Extrato por categoria
+    Nesta funcionalidade, o usuário pode visualizar o extrato financeiro de uma determinada categoria, as categorias existentes são: alimentação, saúde, lazer, transporte, boletos.
 
 | Pensando em uma melhor experiência de usuário utilizamos um sistema de "Banco de Dados",       |
 | no qual mesmo que o programa atual seja finalizado os dados colocados pelo usuário continuarão |
