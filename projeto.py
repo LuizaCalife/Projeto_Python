@@ -23,6 +23,70 @@ def adicionar(transacoes):
     salvar(transacoes)
     print('A transação foi adicionada com sucesso!')
 
+def listar(transacoes, categoria=None):
+    print('Lista de transações:')
+    for cont, transacoes in transacoes.items():
+        if not categoria or transacoes['categoria']==categoria:
+            print(f"{cont}. {transacoes['nome']} ({transacoes['categoria']}): R$ {transacoes['valor']}")
+
+def atualizar(transacoes):
+    cont=int(input('Número da transação:'))
+    if cont in transacoes:
+        nome=input('Digite o novo nome da transação, caso não deseje alterá-lo, pressione Enter:')
+        categoria=input('Digite o nova categoria da transação, caso não deseje alterá-la, pressione Enter:')
+        valor=input('Digite o novo valor da transação, caso não deseje alterá-lo, pressione Enter:')
+        if nome:
+            transacoes[cont]["nome"]=nome
+        if categoria:
+            transacoes[cont]["categoria"]=categoria
+        if valor:
+            transacoes[cont]["valor"]=float(valor)
+        salvar(transacoes)
+        print('A transação foi atualizada!')
+    else:
+        print('Transação não encontrada.')
+
+def deletar(transacoes):
+    cont=int(input('Digite o número da transação para deletá-la:'))
+    if cont in transacoes:
+        del transacoes[cont]
+        salvar(transacoes)
+        print('Transação deletada!')
+    else:
+        print('Transação não encontrada.')
+
+def filtrar_categoria(transacoes):
+    categoria=input('Digite a categoria:')
+    listar(transacoes, categoria)
+
+def extrato(transacoes):
+    categoria=input('Digite a categoria:')
+    total=0
+    print(f'Extrato da categoria: {categoria}:')
+    for cont, transacao in transacoes.items():
+        if transacao["categoria"]==categoria:
+            print(f"{transacao['nome']}: R$ {transacao['valor']}")
+            total+=transacao['valor']
+    print(f'Total: R${total}')
+
+def salvar(transacoes):
+    with open(BANCO_DE_DADOS, 'w') as f:
+        for cont, transacoes in transacoes.items():
+            f.write(f"{cont};{transacoes['nome']};{transacoes['categoria']};{transacoes['valor']}\n")
+
+def carregar_transacoes():
+    transacoes={}
+    try:
+        with open(BANCO_DE_DADOS, 'r') as f:
+            for line in f:
+                cont, nome, categoria, valor=line.strip().split(";")
+                transacoes[int(cont)] = {"nome": nome, "categoria": categoria, "valor": float(valor)}
+    except FileNotFoundError:
+        pass
+    return transacoes
+
+transacoes = carregar_transacoes()
+
 while True:
     escolha=menu()
     if escolha==1:
