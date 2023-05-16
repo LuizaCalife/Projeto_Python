@@ -1,4 +1,4 @@
-BANCO_DE_DADOS='transacoes.txt'
+BANCO_DE_DADOS='transacoes.csv'
 
 def menu():
     print(f'{" ":^5}\033[1m~Despesas de Natália~\033[m')
