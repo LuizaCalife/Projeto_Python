@@ -70,14 +70,14 @@ def extrato(transacoes):
     print(f'Total: R${total}')
 
 def salvar(transacoes):
-    with open(BANCO_DE_DADOS, 'w') as f:
+    with open(BANCO_DE_DADOS, 'w', encoding='utf8') as f: #w= escrever o file
         for cont, transacoes in transacoes.items():
             f.write(f"{cont};{transacoes['nome']};{transacoes['categoria']};{transacoes['valor']}\n")
 
 def carregar_transacoes():
     transacoes={}
     try:
-        with open(BANCO_DE_DADOS, 'r') as f:
+        with open(BANCO_DE_DADOS, 'r', encoding='utf8') as f: #r= ler o file
             for line in f:
                 cont, nome, categoria, valor=line.strip().split(";")
                 transacoes[int(cont)] = {"nome": nome, "categoria": categoria, "valor": float(valor)}
@@ -109,3 +109,4 @@ while True:
     else:
         print('Opção inválida.')
 
+#falta: total do extrato, saldo, entrada de dinheiro, acento nas categorias e funcionalidade extra.
