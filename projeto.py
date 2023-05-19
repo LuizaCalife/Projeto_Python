@@ -100,7 +100,7 @@ while True:
     escolha=menu()
     if escolha==1:
         print('\033[4mCategorias:\033[m')
-        print('-Alimentação;\n-Saúde;\n-Lazer;\n-Transporte;\n-Boletos.\n')
+        print('-Alimentos;\n-Bem-estar;\n-Lazer;\n-Transporte;\n-Boletos.\n')
         adicionar(transacoes)
     elif escolha==2:
         atualizar(transacoes)
