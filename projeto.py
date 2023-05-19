@@ -4,12 +4,12 @@ def menu():
     print(f'{" ":^5}\033[1m~Despesas de Natália~\033[m')
     print('\033[4mMenu de transações:\033[m')
     print('1. Adicionar transação')
-    print('2. Listar transações')
-    print('3. Atualizar transação')
-    print('4. Deletar transação')
-    print('5. Filtrar transações por categoria')
-    print('6. Extrato por categoria')
-    print('7. Funcionalidade extra')
+    print('2. Atualizar transação')
+    print('3. Listar transações')
+    print('4. Listar transações por categoria')
+    print('5. Extrato por categoria')
+    print('6. Funcionalidade extra')
+    print('7. Deletar transação')
     print('0. Sair')
     escolha=int(input('Selecione uma opção:'))
     return escolha
@@ -51,9 +51,14 @@ def atualizar(transacoes):
 def deletar(transacoes):
     cont=int(input('Digite o número da transação para deletá-la:'))
     if cont in transacoes:
-        del transacoes[cont]
-        salvar(transacoes)
-        print('Transação deletada!')
+        confirmar=int(input(f'Deseja mesmo deletar a transação{cont}?\n[1]-sim [2]-não\nDigite:'))
+        if confirmar==1:
+            del transacoes[cont]
+            salvar(transacoes)
+            print('Transação deletada!')
+        elif confirmar==2:
+            print('Você será redirecionado ao menu!')
+            menu()
     else:
         print('Transação não encontrada.')
 
@@ -62,6 +67,8 @@ def filtrar_categoria(transacoes):
     listar(transacoes, categoria)
 
 def extrato(transacoes):
+    print('\033[4mCategoria:\033[m')
+    print('-Alimentos;\n-Bem-estar;\n-Lazer;\n-Transporte;\n-Boletos.\n')
     categoria=input('Digite a categoria:')
     total=0
     print(f'Extrato da categoria: {categoria}:')
