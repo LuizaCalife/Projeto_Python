@@ -15,11 +15,11 @@ def menu():
     return escolha
 
 def adicionar(transacoes):
-    cont=len(transacoes) + 1
+    cont=len(transacoes) +1
     nome=input('Nome da transação:').lower().strip()
     categoria=input('Categoria da transação:').lower().strip()
     valor=float(input('Valor da transação:'))
-    transacoes[cont]={"nome": nome, "categoria": categoria, "valor": valor}
+    transacoes[cont]={"nome": nome, "categoria": categoria, "valor":valor}
     salvar(transacoes)
     print('A transação foi adicionada com sucesso!')
 
@@ -33,6 +33,8 @@ def atualizar(transacoes):
     cont=int(input('Número da transação:'))
     if cont in transacoes:
         nome=input('Digite o novo nome da transação, caso não deseje alterá-lo, pressione Enter:')
+        print('\033[4mCategorias:\033[m')
+        print('-Alimentos;\n-Bem-estar;\n-Lazer;\n-Transporte;\n-Boletos.\n')
         categoria=input('Digite o nova categoria da transação, caso não deseje alterá-la, pressione Enter:')
         valor=input('Digite o novo valor da transação, caso não deseje alterá-lo, pressione Enter:')
         if nome:
@@ -70,22 +72,22 @@ def extrato(transacoes):
     print(f'Total: R${total}')
 
 def salvar(transacoes):
-    with open(BANCO_DE_DADOS, 'w', encoding='utf8') as f: #w= escrever o file
+    with open(BANCO_DE_DADOS, 'w', encoding='utf8') as f:
         for cont, transacoes in transacoes.items():
             f.write(f"{cont};{transacoes['nome']};{transacoes['categoria']};{transacoes['valor']}\n")
 
 def carregar_transacoes():
     transacoes={}
     try:
-        with open(BANCO_DE_DADOS, 'r', encoding='utf8') as f: #r= ler o file
+        with open(BANCO_DE_DADOS, 'r', encoding='utf8') as f:
             for line in f:
                 cont, nome, categoria, valor=line.strip().split(";")
-                transacoes[int(cont)] = {"nome": nome, "categoria": categoria, "valor": float(valor)}
+                transacoes[int(cont)]={"nome": nome, "categoria": categoria, "valor": float(valor)}
     except FileNotFoundError:
         pass
     return transacoes
 
-transacoes = carregar_transacoes()
+transacoes=carregar_transacoes()
 
 while True:
     escolha=menu()
@@ -94,19 +96,17 @@ while True:
         print('-Alimentação;\n-Saúde;\n-Lazer;\n-Transporte;\n-Boletos.\n')
         adicionar(transacoes)
     elif escolha==2:
-        listar(transacoes)
-    elif escolha==3:
         atualizar(transacoes)
+    elif escolha==3:
+        listar(transacoes)
     elif escolha==4:
-        deletar(transacoes)
-    elif escolha==5:
         filtrar_categoria(transacoes)
-    elif escolha==6:
+    elif escolha==5:
         extrato(transacoes)
+    elif escolha==7:
+        deletar(transacoes)
     elif escolha==0:
         print('Programa encerrado.')
         break
     else:
         print('Opção inválida.')
-
-#falta: total do extrato, saldo, entrada de dinheiro, acento nas categorias e funcionalidade extra.
