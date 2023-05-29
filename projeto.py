@@ -130,6 +130,7 @@ def meta_financeira_mensal(transacoes):
     if meta_financeira_mensal>total:
         restante=meta_financeira_mensal-total
         print(f'Você possui R${restante} referente a sua meta mensal.')
+        print(f'Faltam R$ {meta_financeira_mensal-restante} para você atingir a sua meta mensal.')
 
     elif meta_financeira_mensal<total:
         resto=saldo-meta_financeira_mensal
@@ -138,8 +139,7 @@ def meta_financeira_mensal(transacoes):
 
     else:
         print('Você atingiu sua meta mensal')
-
-
+        
 while True:
     escolha=menu()
     if escolha==1:
