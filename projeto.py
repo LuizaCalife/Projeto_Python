@@ -1,4 +1,4 @@
-BANCO_DE_DADOS = 'transacoes.csv'
+BANCO_DE_DADOS='transacoes.csv'
 
 def menu():
     print('\n')
@@ -12,27 +12,24 @@ def menu():
     print('\033[1;36m6.\033[m Meta financeira mensal')
     print('\033[1;36m7.\033[m Deletar transação')
     print('\033[1;36m0.\033[m Sair')
-    escolha = int(input('Selecione uma opção:'))
+    escolha=int(input('Selecione uma opção:'))
     print('\n')
     return escolha
-
 
 def adicionar(transacoes):
     cont=len(transacoes) +1
     nome=input('Nome da transação:').lower().strip()
     categoria=input('Categoria da transação:').lower().strip()
     valor=float(input('Valor da transação:'))
-    transacoes[cont]={"nome": nome, "categoria": categoria, "valor": valor}
+    transacoes[cont]={"nome": nome, "categoria": categoria, "valor":valor}
     salvar(transacoes)
     print('A transação foi adicionada com sucesso!')
-
 
 def listar(transacoes, categoria=None):
     print('\033[1mLista de transações:\033[m')
     for cont, transacoes in transacoes.items():
         if not categoria or transacoes['categoria']==categoria:
-            print(f"{cont}. {transacoes['nome']} ({transacoes['categoria']}): R${transacoes['valor']}")
-
+            print(f"{cont}. {transacoes['nome']} ({transacoes['categoria']}): R$ {transacoes['valor']}")
 
 def atualizar(transacoes):
     cont=int(input('Número da transação:'))
@@ -53,11 +50,10 @@ def atualizar(transacoes):
     else:
         print('Transação não encontrada.')
 
-
 def deletar(transacoes):
     cont=int(input('Digite o número da transação para deletá-la:'))
     if cont in transacoes:
-        confirmar=int(input(f'Deseja mesmo deletar a transação {cont}?\n[\033[33m1\033[m]-sim \n[\033[33m2\033[m]-não\nDigite:'))
+        confirmar=int(input(f'Deseja mesmo deletar a transação{cont}?\n[\033[33m1\033[m]-sim \n[\033[33m2\033[m]-não\nDigite:'))
         if confirmar==1:
             del transacoes[cont]
             salvar(transacoes)
@@ -68,11 +64,9 @@ def deletar(transacoes):
     else:
         print('Transação não encontrada.')
 
-
 def filtrar_categoria(transacoes):
     categoria=input('Digite a categoria:')
     listar(transacoes, categoria)
-
 
 def extrato(transacoes):
     total_por_categoria=0
@@ -85,7 +79,7 @@ def extrato(transacoes):
         print(f'Extrato da categoria: {categoria}:')
         for cont, transacao in transacoes.items():
             if transacao["categoria"]==categoria:
-                print(f"{transacao['nome']}: R${transacao['valor']}")
+                print(f"{transacao['nome']}: R$ {transacao['valor']}")
                 total_por_categoria+=transacao['valor']
         print(f'Total:R${total_por_categoria}')
     elif tipo_do_extrato==2:
@@ -94,43 +88,37 @@ def extrato(transacoes):
             total+=transacao['valor']
         print(f'Total de todas as transações: R${total:.2f}')
 
-
 def salvar(transacoes):
     with open(BANCO_DE_DADOS, 'w', encoding='utf8') as f:
         for cont, transacoes in transacoes.items():
             f.write(f"{cont};{transacoes['nome']};{transacoes['categoria']};{transacoes['valor']}\n")
-
 
 def carregar_transacoes():
     transacoes={}
     try:
         with open(BANCO_DE_DADOS, 'r', encoding='utf8') as f:
             for line in f:
-                cont, nome, categoria, valor = line.strip().split(";")
+                cont, nome, categoria, valor=line.strip().split(";")
                 transacoes[int(cont)]={"nome": nome, "categoria": categoria, "valor": float(valor)}
     except FileNotFoundError:
         pass
     return transacoes
 
-
 transacoes=carregar_transacoes()
-
 
 def meta_financeira_mensal(transacoes):
     total=0
 
     saldo=float(input('Digite seu saldo: '))
     meta_financeira_mensal=float(input('Digite sua meta para esse mês: '))
-    print()
 
     for transacao in transacoes.values():
-        total+=transacao['valor']
-        print(f'Total de todas as transações: R${total:.2f}')
+            total+=transacao['valor']
+            print(f'Total de todas as transações: R${total:.2f}')
 
     if meta_financeira_mensal>total:
         restante=meta_financeira_mensal-total
         print(f'Você possui R${restante} referente a sua meta mensal.')
-        print(f'Faltam R$ {meta_financeira_mensal-restante} para você atingir a sua meta mensal.')
 
     elif meta_financeira_mensal<total:
         resto=saldo-meta_financeira_mensal
@@ -139,7 +127,7 @@ def meta_financeira_mensal(transacoes):
 
     else:
         print('Você atingiu sua meta mensal')
-        
+
 while True:
     escolha=menu()
     if escolha==1:
@@ -163,3 +151,4 @@ while True:
         break
     else:
         print('Opção inválida.')
+        
